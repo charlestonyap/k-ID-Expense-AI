@@ -1,0 +1,107 @@
+
+general_policy:
+  require_receipts: true
+  require_budget_approval: true
+  domain_leader_approval_limit_usd: 500
+  finance_approval_required_over_usd: 500
+  finance_email: "finance@k-id.com"
+
+reimbursable_categories:
+  - business_travel
+  - business_meals
+  - business_entertainment
+  - miscellaneous_business_expenses
+  - software_tools
+  - equipment
+  - professional_development
+  - mobile_phone_usage
+
+non_reimbursable_items:
+  - in-room_movies
+  - hotel_health_club_fees
+  - laundry_under_7_nights
+  - personal_gifts_or_donations
+  - unauthorized_events
+  - personal_books
+  - personal_auto_repairs
+  - unauthorized_travel_insurance
+  - premium_travel_without_approval
+  - excessive_alcohol
+  - sightseeing_or_entertainment
+  - commuting_to_office
+
+travel:
+  use_navan: true
+  airfare:
+    class: economy
+    prebook_days_min: 14
+    flexible_fares_allowed: false
+    premium_economy:
+      allowed_if:
+        nonstop_hours_min: 12
+        max_fare_usd: 2500
+  checked_baggage:
+    reimbursable_if:
+      trip_days_min: 7
+      carrying_company_items: true
+  hotels:
+    default_max_usd: 250
+    high_cost_city_max_usd: 350
+    high_cost_cities: [London, Tokyo, New York]
+  rental_car:
+    max_daily_usd: 100
+    upgrades_allowed: false
+    insurance_reimbursable: false
+  ground_transport:
+    personal_vehicle:
+      rate_per_km_usd: 0.30
+      require_mileage_log: true
+    reimbursable: [rental, fuel, tolls, parking, ride_hailing]
+    non_reimbursable: [tickets, fines, repairs, traffic_violations, towing]
+    commuting:
+      reimbursable: false
+      exceptions:
+        - required_overtime
+        - meeting_during_commute
+  black_car_service:
+    allowed_with_approval: true
+    valid_reasons:
+      - security
+      - language_barrier
+      - tight_schedule
+      - cost_efficiency
+
+meals_and_entertainment:
+  work_trip_meals:
+    daily_limit_usd: 75
+    gratuity_limit_percent: 20
+    require_receipts: true
+  business_meals:
+    max_per_person_usd: 100
+    approval_required_above_usd: 100
+    require_attendee_list: true
+    require_purpose: true
+  entertainment:
+    max_per_person_usd: 100
+    approval_required_above_usd: 100
+    brand_safety: true
+    prohibited:
+      - adult_entertainment
+      - narcotics
+      - red_light_districts
+      - dogfighting
+      - excessive_alcohol
+
+communications:
+  mobile_reimbursement_max_usd: 50
+  roaming: disable_when_traveling
+
+professional_development:
+  preapproval_required: true
+  unrelated_certifications_reimbursable: false
+
+equipment:
+  general_employee_limit_usd: 2000
+  pde_limit_usd: 2800
+  cycle_years: 3
+  budget_exception_required_above_limit: true
