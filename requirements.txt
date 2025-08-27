@@ -1,4 +1,5 @@
 streamlit
+openpyxl
 pandas
 pyyaml
 plotly
@@ -13,3 +14,4 @@ imbalanced-learn
 scikit-learn
 
 xgboost
+
