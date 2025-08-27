@@ -1,0 +1,14 @@
+streamlit
+pandas
+pyyaml
+plotly
+flask
+flask-cors
+numpy
+fuzzywuzzy
+shap
+spacy
+sentence-transformers
+imbalanced-learn
+scikit-learn
+xgboost
