@@ -5498,7 +5498,7 @@ with tab6:
 
         # Initialize or load detector
         if 'expense_detector' not in st.session_state:
-            model_path = "trained_models/"
+            model_path = "./trained_models"
             
             # Try to load pre-trained model first
             if os.path.exists(model_path) and os.path.exists(os.path.join(model_path, "best_model.pkl")):
