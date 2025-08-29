@@ -239,7 +239,6 @@ reimbursable_categories:
   - business_meals
   - business_entertainment
   - miscellaneous_business_expenses
-  - software_tools
   - equipment
   - professional_development
   - mobile_phone_usage
@@ -6439,15 +6438,14 @@ with tab7:
         fa_category_filter = st.selectbox(
             "Category Filter",
             options=['all', 'electronics_it', 'furniture_office', 'machinery_equipment', 
-                    'vehicles_transport', 'building_improvements', 'software_licenses'],
+                    'vehicles_transport', 'building_improvements'],
             format_func=lambda x: {
                 'all': '📊 All Categories',
                 'electronics_it': '💻 Electronics & IT',
                 'furniture_office': '🪑 Office Furniture',
                 'machinery_equipment': '⚙️ Machinery & Equipment',
                 'vehicles_transport': '🚛 Vehicles & Transport',
-                'building_improvements': '🏗️ Building Improvements',
-                'software_licenses': '💿 Software Licenses'
+                'building_improvements': '🏗️ Building Improvements'
             }.get(x, x)
         )
         
@@ -6461,7 +6459,6 @@ with tab7:
         ⚙️ Machinery & Equipment<br>
         🚛 Vehicles & Transport<br>
         🏗️ Building Improvements<br>
-        💿 Software Licenses
         </small>
         </div>
         """, unsafe_allow_html=True)
@@ -6864,8 +6861,7 @@ with tab7:
                             'furniture_office': '🪑', 
                             'machinery_equipment': '⚙️',
                             'vehicles_transport': '🚛',
-                            'building_improvements': '🏗️',
-                            'software_licenses': '💿'
+                            'building_improvements': '🏗️'
                         }
 
                         # Create horizontal bar chart instead of pie for better readability
@@ -7319,8 +7315,7 @@ with tab7:
                                                         'furniture_office': '🪑',
                                                         'machinery_equipment': '⚙️',
                                                         'vehicles_transport': '🚛',
-                                                        'building_improvements': '🏗️',
-                                                        'software_licenses': '💿'
+                                                        'building_improvements': '🏗️'
                                                     }.get(trans_data['category'], '📦')
 
                                                     # Fix the description display issue
@@ -7581,12 +7576,11 @@ with tab7:
             <div class="info-box">
             <h4>🎯 Detection Categories:</h4>
             
-            <strong>💻 Electronics & IT:</strong> Computers, servers, network equipment, software<br>
+            <strong>💻 Electronics & IT:</strong> Computers, servers, network equipment<br>
             <strong>🪑 Office Furniture:</strong> Desks, chairs, filing cabinets, storage<br>
             <strong>⚙️ Machinery & Equipment:</strong> Industrial machines, tools, specialized equipment<br>
             <strong>🚛 Vehicles & Transport:</strong> Fleet vehicles, trucks, construction vehicles<br>
             <strong>🏗️ Building Improvements:</strong> HVAC, electrical, structural modifications<br>
-            <strong>💿 Software Licenses:</strong> Enterprise software, professional applications
             </div>
             """, unsafe_allow_html=True)
         
