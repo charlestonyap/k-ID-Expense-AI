@@ -4422,7 +4422,7 @@ with tab1:
                     textinfo='percent+label',
                     texttemplate='%{label}<br>$%{value:,.0f}<br>(%{percent})',
                     textfont_size=12,
-                    marker=dict(line=dict(color='#ffffff', use_container_width=2))
+                    marker=dict(line=dict(color='#ffffff', width=2))
                 )
 
                 fig_amounts.update_layout(
