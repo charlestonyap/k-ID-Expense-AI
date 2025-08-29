@@ -4382,10 +4382,9 @@ with tab1:
 
                 # Enhanced styling
                 fig_status.update_traces(
-                    textposition='outside', 
+                    textposition='outside',
                     textinfo='percent+label+value',
-                    textfont_size=12,
-                    marker=dict(line=dict(color='#ffffff', use_container_width=2))
+                    textfont_size=12
                 )
 
                 fig_status.update_layout(
