@@ -5498,7 +5498,17 @@ with tab6:
 
         # Initialize or load detector
         if 'expense_detector' not in st.session_state:
-            model_path = "./trained_models"
+            # Debug: Show current working directory and files
+            st.write("**Debug Info:**")
+            st.write(f"Current directory: {os.getcwd()}")
+            st.write("Files in current directory:")
+            st.write(os.listdir("."))
+            
+            if os.path.exists("trained_models"):
+                st.write("Files in trained_models:")
+                st.write(os.listdir("trained_models"))
+            
+            model_path = "trained_models"
             
             # Check if required files exist
             required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]
