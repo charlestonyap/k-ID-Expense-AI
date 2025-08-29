@@ -5497,7 +5497,7 @@ with tab6:
         # Initialize or load detector
         if 'expense_detector' not in st.session_state:
             model_dir = "trained_models"
-            required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]
+            required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl", "nlp_model.pkl"]
             
             try:
                 detector = PersonalExpenseDetector(auto_train=False)
@@ -5517,7 +5517,7 @@ with tab6:
                     with open(f"{model_dir}/category_encoder.pkl", 'rb') as f:
                         detector.category_encoder = pickle.load(f)
                     with open(f"{model_dir}/nlp_model.pkl", 'rb') as f:
-                        detector.category_encoder = pickle.load(f)
+                        detector.nlp_model = pickle.load(f)
                     
                     # Set flags
                     detector.is_ml_trained = True
