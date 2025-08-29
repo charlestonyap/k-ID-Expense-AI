@@ -4469,7 +4469,7 @@ with tab1:
                             orientation='h',
                             marker=dict(
                                 color=colors,
-                                line=dict(color='#9c66ea', use_container_width=1)
+                                line=dict(color='#9c66ea', width=1)
                             ),
                             text=[f'{val}' for val in reason_counts.values],
                             textposition='outside',
@@ -4559,7 +4559,7 @@ with tab1:
                                 colorscale='Purples',
                                 showscale=True,
                                 colorbar=dict(title='Amount ($)', tickfont=dict(color='#e2e8f0')),
-                                line=dict(color='#9c66ea', use_container_width=1)
+                                line=dict(color='#9c66ea', width=1)
                             ),
                             text=[f'${val:,.0f}' for val in employee_costs['Out_of_Pocket_Amount']],
                             textposition='outside',
