@@ -5495,50 +5495,50 @@ with tab6:
 
         # Initialize or load detector
         if 'expense_detector' not in st.session_state:
-            print("DEBUG: Starting file system analysis")
+            st.write("**DEBUG: File System Analysis**")
             
             # Check current directory
             current_dir = os.getcwd()
-            print(f"Current working directory: {current_dir}")
+            st.write(f"Current working directory: {current_dir}")
             
             # List all files in current directory
             try:
                 files_in_root = os.listdir(".")
-                print("Files in root directory:")
+                st.write("Files in root directory:")
                 for file in sorted(files_in_root):
-                    print(f"  - {file}")
+                    st.write(f"  - {file}")
             except Exception as e:
-                print(f"Cannot list root directory: {e}")
+                st.error(f"Cannot list root directory: {e}")
             
             # Check if trained_models directory exists
             model_dir = "trained_models"
-            print(f"\nChecking model directory: {model_dir}")
+            st.write(f"\n**Checking model directory: {model_dir}**")
             
             if os.path.exists(model_dir):
-                print(f"Directory '{model_dir}' exists")
+                st.success(f"✅ Directory '{model_dir}' exists")
                 try:
                     model_files = os.listdir(model_dir)
-                    print("Files in trained_models:")
+                    st.write("Files in trained_models:")
                     for file in sorted(model_files):
                         file_path = os.path.join(model_dir, file)
                         file_size = os.path.getsize(file_path) if os.path.exists(file_path) else 0
-                        print(f"  - {file} ({file_size:,} bytes)")
+                        st.write(f"  - {file} ({file_size:,} bytes)")
                 except Exception as e:
-                    print(f"Cannot list model directory: {e}")
+                    st.error(f"Cannot list model directory: {e}")
             else:
-                print(f"Directory '{model_dir}' does not exist")
+                st.error(f"❌ Directory '{model_dir}' does not exist")
                 
                 # Try alternative paths
                 alternative_paths = ["./trained_models", "trained_models/", "/trained_models"]
                 for alt_path in alternative_paths:
                     if os.path.exists(alt_path):
-                        print(f"Found alternative path: {alt_path}")
+                        st.info(f"Found alternative path: {alt_path}")
                         model_dir = alt_path
                         break
             
             # Check specific required files
             required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]
-            print(f"\nChecking required files in {model_dir}:")
+            st.write(f"\n**Checking required files in {model_dir}:**")
             
             file_status = {}
             for file in required_files:
@@ -5549,73 +5549,83 @@ with tab6:
                 if exists:
                     try:
                         size = os.path.getsize(file_path)
-                        print(f"✓ {file}: {size:,} bytes")
+                        st.write(f"✅ {file}: {size:,} bytes")
                     except Exception as e:
-                        print(f"⚠ {file}: exists but cannot read size ({e})")
+                        st.write(f"⚠️ {file}: exists but cannot read size ({e})")
                 else:
-                    print(f"✗ {file}: missing")
+                    st.write(f"❌ {file}: missing")
             
             # Try to load the models
-            print(f"\nAttempting to load models...")
+            st.write(f"\n**Attempting to load models...**")
             
             try:
                 # Direct initialization without model loading
                 detector = PersonalExpenseDetector(auto_train=False)
-                print("✓ PersonalExpenseDetector initialized")
+                st.write("✅ PersonalExpenseDetector initialized")
                 
                 # Check if all required files exist
                 if all(file_status.values()):
-                    print("✓ All required files found, attempting to load...")
+                    st.write("✅ All required files found, attempting to load...")
                     
                     # Try loading each file individually with detailed error reporting
                     try:
                         with open(f"{model_dir}/best_model.pkl", 'rb') as f:
                             detector.best_model = pickle.load(f)
-                        print("✓ best_model.pkl loaded")
+                        st.write("✅ best_model.pkl loaded")
                     except Exception as e:
-                        print(f"✗ Failed to load best_model.pkl: {e}")
+                        st.error(f"❌ Failed to load best_model.pkl: {e}")
                         
                     try:
                         with open(f"{model_dir}/scaler.pkl", 'rb') as f:
                             detector.scaler = pickle.load(f)
-                        print("✓ scaler.pkl loaded")
+                        st.write("✅ scaler.pkl loaded")
                     except Exception as e:
-                        print(f"✗ Failed to load scaler.pkl: {e}")
+                        st.error(f"❌ Failed to load scaler.pkl: {e}")
                         
                     try:
                         with open(f"{model_dir}/category_encoder.pkl", 'rb') as f:
                             detector.category_encoder = pickle.load(f)
-                        print("✓ category_encoder.pkl loaded")
+                        st.write("✅ category_encoder.pkl loaded")
                     except Exception as e:
-                        print(f"✗ Failed to load category_encoder.pkl: {e}")
+                        st.error(f"❌ Failed to load category_encoder.pkl: {e}")
                     
                     # Set flags
                     if detector.best_model and detector.scaler and detector.category_encoder:
                         detector.is_ml_trained = True
                         detector.category_encoder_fitted = True
                         detector.best_model_name = "Loaded Model"
-                        print("✓ All ML components loaded successfully!")
+                        st.success("🎉 All ML components loaded successfully!")
                     else:
-                        print("⚠ Some components failed to load")
+                        st.warning("⚠️ Some components failed to load")
                         
                 else:
                     missing_files = [f for f, exists in file_status.items() if not exists]
-                    print(f"⚠ Missing files: {missing_files}")
-                    print("Using rule-based detection only.")
+                    st.warning(f"⚠️ Missing files: {missing_files}")
+                    st.info("Using rule-based detection only.")
                     
+                # Store in session state
                 st.session_state.expense_detector = detector
                 
+                # Add a separator before status display
+                st.write("\n" + "="*50)
+                st.write("**DEBUG COMPLETE - Loading finished**")
+                st.write("="*50 + "\n")
+                
             except Exception as e:
-                print(f"✗ Error during model loading: {e}")
-                print(f"Exception type: {type(e).__name__}")
+                st.error(f"❌ Error during model loading: {e}")
+                st.write(f"Exception type: {type(e).__name__}")
                 import traceback
-                print("Full traceback:")
-                traceback.print_exc()
+                st.code(traceback.format_exc())
                 
                 # Fallback
                 st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
+                
+                # Add separator even for error case
+                st.write("\n" + "="*50)
+                st.write("**DEBUG COMPLETE - Using fallback detector**")
+                st.write("="*50 + "\n")
         
-        # Get detector from session state
+        # Get detector from session state (this runs every time, not just on first load)
         detector = st.session_state.expense_detector
 
         # Model Status Display
