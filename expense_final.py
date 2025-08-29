@@ -5500,8 +5500,14 @@ with tab6:
         if 'expense_detector' not in st.session_state:
             model_path = "./trained_models"
             
-            # Try to load pre-trained model first
-            if os.path.exists(model_path) and os.path.exists(os.path.join(model_path, "best_model.pkl")):
+            # Check if required files exist
+            required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]
+            model_files_exist = all(
+                os.path.exists(os.path.join(model_path, file)) 
+                for file in required_files
+            )
+            
+            if model_files_exist:
                 try:
                     st.session_state.expense_detector = PersonalExpenseDetector(
                         model_path=model_path, 
@@ -5513,10 +5519,9 @@ with tab6:
                     st.info("🔄 Using rule-based detection only.")
                     st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
             else:
-                st.warning("⚠️ No pre-trained model found. Using rule-based detection only.")
-                st.info("💡 Run training to enable advanced ML features.")
+                st.warning("⚠️ Required model files not found. Using rule-based detection only.")
                 st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
-
+        
         detector = st.session_state.expense_detector
 
         # Model Status Display
