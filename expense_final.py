@@ -5534,34 +5534,34 @@ with tab6:
         detector = st.session_state.expense_detector
         
         # Model Status Display
-        st.subheader("ℹ️ Detection System Status")
-        col1, col2, col3 = st.columns(3)
+        st.subheader("Detection System Status")
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             if detector.is_ml_trained:
                 st.success("✅ ML Model: Trained and Active")
-                st.caption("💡 ML = Machine Learning algorithms that learn from data patterns")
-                if detector.best_model_name:
+                if hasattr(detector, 'best_model_name') and detector.best_model_name:
                     st.info(f"**Model Type:** {detector.best_model_name}")
-                if hasattr(detector, 'cv_results') and detector.best_model_name in detector.cv_results:
-                    best_f1 = detector.cv_results[detector.best_model_name].get('test_f1', 0)
-                    st.metric("Test F1 Score", f"{best_f1:.3f}")
-                    st.caption("💡 F1 Score measures accuracy (0.0 = poor, 1.0 = perfect)")
             else:
                 st.warning("⚠️ ML Model: Not Available")
-                st.caption("💡 ML = Machine Learning algorithms that learn from data patterns")
+                st.caption("Using rule-based detection only")
         
         with col2:
-            st.success("✅ Rule-based System: Active")
-            st.caption("💡 Rules = Pre-programmed logic to identify suspicious patterns")
-            st.info("Enhanced with NLP analysis")
-            
-        with col3:
-            if hasattr(detector, 'is_embeddings_loaded') and detector.is_embeddings_loaded:
-                st.success("✅ NLP Embeddings: Loaded")
-                st.caption("💡 NLP = Natural Language Processing for text analysis")
+            if hasattr(detector, 'scaler') and detector.scaler is not None:
+                st.success("✅ Feature Scaler: Loaded")
             else:
-                st.warning("⚠️ NLP Embeddings: Not Available")
-                st.caption("💡 NLP = Natural Language Processing for text analysis")
+                st.error("❌ Feature Scaler: Missing")
+        
+        with col3:
+            if hasattr(detector, 'category_encoder') and detector.category_encoder is not None:
+                st.success("✅ Category Encoder: Loaded")
+            else:
+                st.error("❌ Category Encoder: Missing")
+        
+        with col4:
+            if hasattr(detector, 'nlp_model') and detector.nlp_model is not None:
+                st.success("✅ NLP Model: Loaded")
+            else:
+                st.error("❌ NLP Model: Missing")
         
         # Training setup section for non-ML users
         if not detector.is_ml_trained:
