@@ -1774,11 +1774,11 @@ def create_budget_alert_html_email(team_info, period, focus_on_travel=True, mode
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="use_container_width=device-use_container_width, initial-scale=1.0">
         <title>{budget_type} Alert - {team_info['department']} Team</title>
     </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: {BRAND_COLORS['blackberry']}; margin: 0; padding: 0; background-color: #f8f9fa;">
-        <div style="max-width: 800px; margin: 0 auto; background-color: #ffffff;">
+        <div style="max-use_container_width: 800px; margin: 0 auto; background-color: #ffffff;">
             <!-- Header with K-ID branding -->
             <div style="background: linear-gradient(135deg, {BRAND_COLORS['gradient_start']} 0%, {BRAND_COLORS['gradient_end']} 100%); padding: 30px; text-align: center; border-radius: 0;">
                 <h1 style="color: #ffffff; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">
@@ -1807,7 +1807,7 @@ def create_budget_alert_html_email(team_info, period, focus_on_travel=True, mode
                     <h2 style="color: {BRAND_COLORS['purple']}; margin: 0 0 20px 0; font-size: 22px; display: flex; align-items: center;">
                         <span style="margin-right: 10px;">💰</span> {budget_type} Overview
                     </h2>
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table style="use_container_width: 100%; border-collapse: collapse;">
                         <tr>
                             <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; font-weight: 600; color: {BRAND_COLORS['blackberry']};">Allocated Budget:</td>
                             <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; text-align: right; font-size: 16px;">${team_info['allocated_budget']:,.2f}</td>
@@ -1836,7 +1836,7 @@ def create_budget_alert_html_email(team_info, period, focus_on_travel=True, mode
                     <h2 style="color: {BRAND_COLORS['purple']}; margin: 0 0 20px 0; font-size: 22px; display: flex; align-items: center;">
                         <span style="margin-right: 10px;">📊</span> Team Member Spending & Activity
                     </h2>
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table style="use_container_width: 100%; border-collapse: collapse;">
                         <thead>
                             <tr style="background-color: {BRAND_COLORS['purple_light']};">
                                 <th style="padding: 15px; text-align: left; color: {BRAND_COLORS['blackberry']}; font-weight: 600;">Team Member & Activity</th>
@@ -2358,7 +2358,7 @@ def create_excel_report(employee_name, violations, output_dir="temp_reports"):
         workbook = writer.book
         worksheet = writer.sheets['Policy Violations']
         
-        # Auto-adjust column widths
+        # Auto-adjust column use_container_widths
         for column in worksheet.columns:
             max_length = 0
             column_letter = column[0].column_letter
@@ -2368,8 +2368,8 @@ def create_excel_report(employee_name, violations, output_dir="temp_reports"):
                         max_length = len(str(cell.value))
                 except:
                     pass
-            adjusted_width = min(max_length + 2, 50)  # Cap at 50 characters
-            worksheet.column_dimensions[column_letter].width = adjusted_width
+            adjusted_use_container_width = min(max_length + 2, 50)  # Cap at 50 characters
+            worksheet.column_dimensions[column_letter].use_container_width = adjusted_use_container_width
     
     return filepath
 
@@ -2543,11 +2543,11 @@ def create_email_body_html(emp, violations, mode="Full Validation", has_excel_at
         <html>
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport" content="use_container_width=device-use_container_width, initial-scale=1.0">
             <title>k-ID Corporate Card Policy Alert</title>
         </head>
         <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: {BRAND_COLORS['blackberry']}; margin: 0; padding: 0; background-color: #f8f9fa;">
-            <div style="max-width: 800px; margin: 0 auto; background-color: #ffffff;">
+            <div style="max-use_container_width: 800px; margin: 0 auto; background-color: #ffffff;">
                 <!-- Header with K-ID branding -->
                 <div style="background: linear-gradient(135deg, {BRAND_COLORS['gradient_start']} 0%, {BRAND_COLORS['gradient_end']} 100%); padding: 30px; text-align: center; border-radius: 0;">
                     <h1 style="color: #ffffff; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">
@@ -2578,7 +2578,7 @@ def create_email_body_html(emp, violations, mode="Full Validation", has_excel_at
                         <h3 style="color: {BRAND_COLORS['purple']}; margin: 0 0 20px 0; font-size: 22px; display: flex; align-items: center;">
                             <span style="margin-right: 10px;">📊</span> Summary
                         </h3>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="use_container_width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; font-weight: 600; color: {BRAND_COLORS['blackberry']};">Total Transactions Requiring Action:</td>
                                 <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; text-align: right; font-size: 16px; color: {BRAND_COLORS['purple']}; font-weight: 600;">{len(violations)}</td>
@@ -2712,11 +2712,11 @@ def create_email_body_html(emp, violations, mode="Full Validation", has_excel_at
         <html>
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport" content="use_container_width=device-use_container_width, initial-scale=1.0">
             <title>k-ID Corporate Card Policy Alert</title>
         </head>
         <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: {BRAND_COLORS['blackberry']}; margin: 0; padding: 0; background-color: #f8f9fa;">
-            <div style="max-width: 800px; margin: 0 auto; background-color: #ffffff;">
+            <div style="max-use_container_width: 800px; margin: 0 auto; background-color: #ffffff;">
                 <!-- Header with K-ID branding -->
                 <div style="background: linear-gradient(135deg, {BRAND_COLORS['gradient_start']} 0%, {BRAND_COLORS['gradient_end']} 100%); padding: 30px; text-align: center; border-radius: 0;">
                     <h1 style="color: #ffffff; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">
@@ -2747,7 +2747,7 @@ def create_email_body_html(emp, violations, mode="Full Validation", has_excel_at
                         <h3 style="color: {BRAND_COLORS['purple']}; margin: 0 0 20px 0; font-size: 22px; display: flex; align-items: center;">
                             <span style="margin-right: 10px;">📊</span> Summary
                         </h3>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="use_container_width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; font-weight: 600; color: {BRAND_COLORS['blackberry']};">Total Transactions Requiring Action:</td>
                                 <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; text-align: right; font-size: 16px; color: {BRAND_COLORS['purple']}; font-weight: 600;">{len(violations)}</td>
@@ -2799,18 +2799,18 @@ def create_email_body_html(emp, violations, mode="Full Validation", has_excel_at
                 <span style="margin-right: 10px;">📋</span> Transaction Details
             </h3>
             <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; min-width: 1000px;">
+                <table style="use_container_width: 100%; border-collapse: collapse; min-use_container_width: 1000px;">
                     <thead>
                         <tr style="background: linear-gradient(135deg, {BRAND_COLORS['purple_light']} 0%, {BRAND_COLORS['purple']} 100%);">
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 40px;">#</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">📅 Date</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 80px;">💰 Amount</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 80px;">🏢 Company</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 80px;">👤 Employee</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 120px;">🏪 Vendor</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">🏷️ Category</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 60px;">🧾 Receipt</th>
-                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 200px;">⚠️ Policy Issues</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 40px;">#</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">📅 Date</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 80px;">💰 Amount</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 80px;">🏢 Company</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 80px;">👤 Employee</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 120px;">🏪 Vendor</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">🏷️ Category</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 60px;">🧾 Receipt</th>
+                            <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 200px;">⚠️ Policy Issues</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2943,11 +2943,11 @@ def create_missing_receipt_email_body_html(emp, violations, test_mode=False, has
                 <html>
                 <head>
                     <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta name="viewport" content="use_container_width=device-use_container_width, initial-scale=1.0">
                     <title>k-ID Corporate Card Receipt Reminder</title>
                 </head>
                 <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: {BRAND_COLORS['blackberry']}; margin: 0; padding: 0; background-color: #f8f9fa;">
-                    <div style="max-width: 800px; margin: 0 auto; background-color: #ffffff;">
+                    <div style="max-use_container_width: 800px; margin: 0 auto; background-color: #ffffff;">
                         <!-- Header with K-ID branding -->
                         <div style="background: linear-gradient(135deg, {BRAND_COLORS['gradient_start']} 0%, {BRAND_COLORS['gradient_end']} 100%); padding: 30px; text-align: center; border-radius: 0;">
                             <h1 style="color: #ffffff; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">
@@ -2995,7 +2995,7 @@ def create_missing_receipt_email_body_html(emp, violations, test_mode=False, has
                                 <h3 style="color: {BRAND_COLORS['purple']}; margin: 0 0 20px 0; font-size: 22px; display: flex; align-items: center;">
                                     <span style="margin-right: 10px;">📊</span> Summary
                                 </h3>
-                                <table style="width: 100%; border-collapse: collapse;">
+                                <table style="use_container_width: 100%; border-collapse: collapse;">
                                     <tr>
                                         <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; font-weight: 600; color: {BRAND_COLORS['blackberry']};">Total Transactions Missing Receipts:</td>
                                         <td style="padding: 15px 0; border-bottom: 1px solid {BRAND_COLORS['purple_light']}; text-align: right; font-size: 16px; color: {BRAND_COLORS['purple']}; font-weight: 600;">{len(violations)}</td>
@@ -3017,17 +3017,17 @@ def create_missing_receipt_email_body_html(emp, violations, test_mode=False, has
                                     <span style="margin-right: 10px;">📋</span> Transaction Details
                                 </h3>
                                 <div style="overflow-x: auto;">
-                                    <table style="width: 100%; border-collapse: collapse; min-width: 1000px;">
+                                    <table style="use_container_width: 100%; border-collapse: collapse; min-use_container_width: 1000px;">
                                         <thead>
                                             <tr style="background: linear-gradient(135deg, {BRAND_COLORS['purple_light']} 0%, {BRAND_COLORS['purple']} 100%);">
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 40px;">#</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">📅 Date</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 80px;">💰 Amount</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 120px;">🏪 Vendor</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">🏷️ Category</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">🆔 Transaction ID</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 200px;">📝 Memo</th>
-                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-width: 100px;">⚠️ Issue</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 40px;">#</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">📅 Date</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 80px;">💰 Amount</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 120px;">🏪 Vendor</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">🏷️ Category</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">🆔 Transaction ID</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 200px;">📝 Memo</th>
+                                                <th style="padding: 15px 10px; text-align: left; color: #ffffff; font-weight: 600; border: 1px solid {BRAND_COLORS['purple']}; min-use_container_width: 100px;">⚠️ Issue</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -3050,7 +3050,7 @@ def create_missing_receipt_email_body_html(emp, violations, test_mode=False, has
                                                 <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['black']};">{violation.get('Vendor', 'N/A')}</td>
                                                 <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['black']};">{violation['Category']}</td>
                                                 <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['black']}; font-family: monospace; font-size: 14px;">{violation.get('Transaction_ID', 'N/A')}</td>
-                                                <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['black']}; max-width: 200px; word-wrap: break-word;">{memo_text}</td>
+                                                <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['black']}; max-use_container_width: 200px; word-wrap: break-word;">{memo_text}</td>
                                                 <td style="padding: 12px 10px; border: 1px solid {BRAND_COLORS['purple_light']}; color: {BRAND_COLORS['orange']}; font-weight: 600;">Missing receipt</td>
                                             </tr>
             """
@@ -3408,7 +3408,7 @@ def generate_and_serve_static_ui(emails_scheduled, delay_minutes, mode="Full Val
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="use_container_width=device-use_container_width, initial-scale=1.0">
         <title>k-ID Email Manager - Static View</title>
         <style>
             * {{
@@ -3426,7 +3426,7 @@ def generate_and_serve_static_ui(emails_scheduled, delay_minutes, mode="Full Val
             }}
             
             .container {{
-                max-width: 1200px;
+                max-use_container_width: 1200px;
                 margin: 0 auto;
                 padding: 20px;
             }}
@@ -4301,9 +4301,9 @@ with tab2:
         available_key_columns = [col for col in key_columns if col in st.session_state.df.columns]
 
         if available_key_columns:
-            st.dataframe(st.session_state.df[available_key_columns].head(10), width=True)
+            st.dataframe(st.session_state.df[available_key_columns].head(10), use_container_width=True)
         else:
-            st.dataframe(st.session_state.df.head(10), width=True)
+            st.dataframe(st.session_state.df.head(10), use_container_width=True)
         
         # Show full column list in expander
         with st.expander("📋 View All Columns"):
@@ -4385,7 +4385,7 @@ with tab1:
                     textposition='outside', 
                     textinfo='percent+label+value',
                     textfont_size=12,
-                    marker=dict(line=dict(color='#ffffff', width=2))
+                    marker=dict(line=dict(color='#ffffff', use_container_width=2))
                 )
 
                 fig_status.update_layout(
@@ -4400,7 +4400,7 @@ with tab1:
                     annotations=[dict(text=f'{total_records}<br>Total', x=0.5, y=0.5, font_size=16, showarrow=False)]
                 )
 
-                st.plotly_chart(fig_status, width=True)
+                st.plotly_chart(fig_status, use_container_width=True)
 
             with col2:
                 # Amount by status with enhanced insights
@@ -4423,7 +4423,7 @@ with tab1:
                     textinfo='percent+label',
                     texttemplate='%{label}<br>$%{value:,.0f}<br>(%{percent})',
                     textfont_size=12,
-                    marker=dict(line=dict(color='#ffffff', width=2))
+                    marker=dict(line=dict(color='#ffffff', use_container_width=2))
                 )
 
                 fig_amounts.update_layout(
@@ -4438,7 +4438,7 @@ with tab1:
                     annotations=[dict(text=f'${total_amount:,.0f}<br>Total', x=0.5, y=0.5, font_size=16, showarrow=False)]
                 )
 
-                st.plotly_chart(fig_amounts, width=True)
+                st.plotly_chart(fig_amounts, use_container_width=True)
             
             # Failure reasons analysis
             if failed_transactions > 0:
@@ -4470,7 +4470,7 @@ with tab1:
                             orientation='h',
                             marker=dict(
                                 color=colors,
-                                line=dict(color='#9c66ea', width=1)
+                                line=dict(color='#9c66ea', use_container_width=1)
                             ),
                             text=[f'{val}' for val in reason_counts.values],
                             textposition='outside',
@@ -4486,7 +4486,7 @@ with tab1:
                             yaxis={'gridcolor': 'rgba(156, 102, 234, 0.2)', 'categoryorder': 'total ascending'},
                             height=400
                         )
-                        st.plotly_chart(fig_reasons, width=True)
+                        st.plotly_chart(fig_reasons, use_container_width=True)
 
                 with col2:
                     # Simple horizontal bar chart for employee violations
@@ -4520,7 +4520,7 @@ with tab1:
                         yaxis={'categoryorder': 'total ascending'}
                     )
 
-                    st.plotly_chart(fig_violations, width=True)
+                    st.plotly_chart(fig_violations, use_container_width=True)
                 
                 # Employee violation summary
                 st.subheader("👥 Employee Violation Summary")
@@ -4529,7 +4529,7 @@ with tab1:
                 }).round(2)
                 employee_violations.columns = ['Violation Count', 'Total Amount']
                 employee_violations = employee_violations.sort_values('Violation Count', ascending=False)
-                st.dataframe(employee_violations, width=True)
+                st.dataframe(employee_violations, use_container_width=True)
             # Employee Out-of-Pocket Cost Analysis
             if 'Employee_Out_of_Pocket' in st.session_state.df.columns:
                 total_out_of_pocket = st.session_state.df['Employee_Out_of_Pocket'].sum()
@@ -4560,7 +4560,7 @@ with tab1:
                                 colorscale='Purples',
                                 showscale=True,
                                 colorbar=dict(title='Amount ($)', tickfont=dict(color='#e2e8f0')),
-                                line=dict(color='#9c66ea', width=1)
+                                line=dict(color='#9c66ea', use_container_width=1)
                             ),
                             text=[f'${val:,.0f}' for val in employee_costs['Out_of_Pocket_Amount']],
                             textposition='outside',
@@ -4577,7 +4577,7 @@ with tab1:
                             yaxis={'gridcolor': 'rgba(156, 102, 234, 0.2)', 'title': 'Amount ($)'},
                             height=400
                         )
-                        st.plotly_chart(fig_employee_3d, width=True)
+                        st.plotly_chart(fig_employee_3d, use_container_width=True)
 
                     with col2:
                         # Simple bar chart for cost distribution by category
@@ -4611,7 +4611,7 @@ with tab1:
                             xaxis={'tickformat': '$,.0f'}
                         )
 
-                        st.plotly_chart(fig_costs, width=True)
+                        st.plotly_chart(fig_costs, use_container_width=True)
 
                     # Enhanced detailed breakdown with sparklines
                     st.markdown("### 📋 Executive Cost Summary")
@@ -4636,7 +4636,7 @@ with tab1:
 
                     st.dataframe(
                         employee_costs_display, 
-                        width=True,
+                        use_container_width=True,
                         height=300
                     )
     else:
@@ -4683,7 +4683,7 @@ with tab3:
         
         st.dataframe(
             filtered_df[available_columns],
-            width=True,
+            use_container_width=True,
             column_config={
                 "Amount": st.column_config.NumberColumn(
                     "Amount",
@@ -5135,7 +5135,7 @@ with tab5:
                             })
                         
                         summary_df = pd.DataFrame(summary_data)
-                        st.dataframe(summary_df, width=True, hide_index=True)
+                        st.dataframe(summary_df, use_container_width=True, hide_index=True)
     
     st.markdown("---")
     
@@ -5161,7 +5161,7 @@ with tab5:
                 with col2:
                     end_date = st.date_input("📅 End Date", value=max_date, min_value=min_date, max_value=max_date)
                 with col3:
-                    analyze_button = st.button("🔍 Analyze", type="primary", width=True)
+                    analyze_button = st.button("🔍 Analyze", type="primary", use_container_width=True)
                 
                 if analyze_button and start_date <= end_date:
                     with st.spinner("Analyzing budget..."):
@@ -5258,7 +5258,7 @@ with tab5:
                 results_df = results_df.sort_values('_sort_utilization', ascending=False).drop('_sort_utilization', axis=1)
                 
                 # Display with conditional formatting
-                st.dataframe(results_df, width=True, hide_index=True)
+                st.dataframe(results_df, use_container_width=True, hide_index=True)
                 
                 # Team Detail View
                 st.markdown("---")
@@ -5311,7 +5311,7 @@ with tab5:
                         member_data.sort(key=lambda x: float(x['Amount'].replace('$', '').replace(',', '')), reverse=True)
                         
                         member_df = pd.DataFrame(member_data)
-                        st.dataframe(member_df, width=True, hide_index=True)
+                        st.dataframe(member_df, use_container_width=True, hide_index=True)
                 
                 st.markdown("---")
                 
@@ -5351,7 +5351,7 @@ with tab5:
                                                 help="Send test email to Lulu only")
 
                         with col2:
-                            if st.button("📧 Send Alerts", type="primary", width=True):
+                            if st.button("📧 Send Alerts", type="primary", use_container_width=True):
                                 smtp_config = {
                                     'server': smtp_server,
                                     'port': st.session_state.get('smtp_port', 587),
@@ -5772,7 +5772,7 @@ with tab6:
                             {'Source Category': k, 'Target Category': v} 
                             for k, v in st.session_state.category_mapping.items()
                         ])
-                        st.dataframe(mapping_df, width=True, height=200)
+                        st.dataframe(mapping_df, use_container_width=True, height=200)
                         
                         # Save/Load mapping presets
                         col1, col2, col3 = st.columns(3)
@@ -6358,7 +6358,7 @@ with tab7:
             
             # Display data preview in expander
             with st.expander("📊 Data Preview", expanded=False):
-                st.dataframe(df.head(10), width=True)
+                st.dataframe(df.head(10), use_container_width=True)
                 
                 # Show column mapping suggestions
                 st.markdown("**Column Mapping:**")
@@ -6379,7 +6379,7 @@ with tab7:
                                           index=next((i for i, col in enumerate(cols) if 'date' in col.lower()), 0))
             
             # Analysis button
-            if st.button("🔍 Analyze Fixed Assets", type="primary", width=True):
+            if st.button("🔍 Analyze Fixed Assets", type="primary", use_container_width=True):
                 if st.session_state.fixed_asset_detector is None:
                     st.session_state.fixed_asset_detector = FixedAssetDetector()
                 
@@ -6524,7 +6524,7 @@ with tab7:
                             font=dict(size=12, color='white')
                         )
                     )
-                    st.plotly_chart(fig_confidence, width=True)
+                    st.plotly_chart(fig_confidence, use_container_width=True)
 
                 with col2:
                     st.markdown("**📊 Score Distribution**")
@@ -6573,7 +6573,7 @@ with tab7:
                             font=dict(size=12, color='white')
                         )
                     )
-                    st.plotly_chart(fig_scores, width=True)
+                    st.plotly_chart(fig_scores, use_container_width=True)
 
                 with col3:
                     st.markdown("**💰 Value Distribution**")
@@ -6639,7 +6639,7 @@ with tab7:
                                 font=dict(size=12, color='white')
                             )
                         )
-                        st.plotly_chart(fig_values, width=True)
+                        st.plotly_chart(fig_values, use_container_width=True)
 
                 # Score split analysis with enhanced styling
                 st.markdown("---")
@@ -6683,7 +6683,7 @@ with tab7:
                             font=dict(size=11, color='white')
                         )
                     )
-                    st.plotly_chart(fig_score_split, width=True)
+                    st.plotly_chart(fig_score_split, use_container_width=True)
 
                 with col2:
                     st.markdown("**🏷️ Category Distribution (Fixed Assets Only)**")
@@ -6737,7 +6737,7 @@ with tab7:
                                 font=dict(size=12, color='white')
                             )
                         )
-                        st.plotly_chart(fig_categories, width=True)
+                        st.plotly_chart(fig_categories, use_container_width=True)
         
         with tab_results:
             st.markdown("**📋 All Transaction Results**")
@@ -6828,7 +6828,7 @@ with tab7:
                 
                 st.dataframe(
                     styled_df.style.apply(color_row, axis=1),
-                    width=True,
+                    use_container_width=True,
                     hide_index=True,
                     height=400
                 )
@@ -6844,32 +6844,32 @@ with tab7:
             
             with col1:
                 # Export filtered results
-                if st.button("📊 Export Filtered Results", width=True):
+                if st.button("📊 Export Filtered Results", use_container_width=True):
                     csv_data = filtered_df.to_csv(index=False)
                     st.download_button(
                         label="📥 Download CSV",
                         data=csv_data,
                         file_name=f"fixed_assets_filtered_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        width=True
+                        use_container_width=True
                     )
             
             with col2:
                 # Export only fixed assets
                 fixed_assets_only = filtered_df[filtered_df['is_fixed_asset'] == True]
-                if st.button("🏢 Export Fixed Assets Only", width=True):
+                if st.button("🏢 Export Fixed Assets Only", use_container_width=True):
                     csv_data = fixed_assets_only.to_csv(index=False)
                     st.download_button(
                         label="📥 Download Fixed Assets CSV",
                         data=csv_data,
                         file_name=f"fixed_assets_only_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        width=True
+                        use_container_width=True
                     )
             
             with col3:
                 # Export summary report
-                if st.button("📋 Export Summary Report", width=True):
+                if st.button("📋 Export Summary Report", use_container_width=True):
                     # Create summary report
                     summary_data = {
                         'Total Transactions': len(filtered_df),
@@ -6890,7 +6890,7 @@ with tab7:
                         data=csv_data,
                         file_name=f"fixed_assets_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        width=True
+                        use_container_width=True
                     )
             
             # Export options explanation
@@ -6992,7 +6992,7 @@ with tab7:
 
                     # Show the dataframe with available columns
                     if display_columns:
-                        st.dataframe(fixed_assets_only[display_columns], width=True)
+                        st.dataframe(fixed_assets_only[display_columns], use_container_width=True)
                     else:
                         st.warning("⚠️ No suitable columns found to display")
                     
@@ -7222,7 +7222,7 @@ with tab7:
                                                 st.markdown("---")
 
                                 # Send emails button
-                                if st.button("📧 Schedule Fixed Asset Alerts", type="primary", width=True):
+                                if st.button("📧 Schedule Fixed Asset Alerts", type="primary", use_container_width=True):
                                     with st.spinner("📧 Scheduling fixed asset alert emails..."):
                                         result = st.session_state.fixed_asset_detector.send_fixed_asset_emails_with_ui(
                                             employee_transactions_dict=employee_transactions_dict,
