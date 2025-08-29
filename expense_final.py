@@ -5523,6 +5523,9 @@ with tab6:
             except Exception as e:
                 st.error(f"Error: {e}")
                 st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
+        
+        # Move this line AFTER the initialization block
+        detector = st.session_state.expense_detector
 
         # Model Status Display
         st.subheader("ℹ️ Detection System Status")
