@@ -2,9 +2,6 @@
 # .venv\Scripts\activate.bat
 # streamlit run expense_final.py
 
-# error in expense vlaidation
-# department mapping
-
 import streamlit as st
 import pandas as pd
 import yaml
@@ -4303,9 +4300,9 @@ with tab2:
         available_key_columns = [col for col in key_columns if col in st.session_state.df.columns]
 
         if available_key_columns:
-            st.dataframe(st.session_state.df[available_key_columns].head(10), use_container_width=True)
+            st.dataframe(st.session_state.df[available_key_columns].head(10), width=True)
         else:
-            st.dataframe(st.session_state.df.head(10), use_container_width=True)
+            st.dataframe(st.session_state.df.head(10), width=True)
         
         # Show full column list in expander
         with st.expander("📋 View All Columns"):
@@ -4402,7 +4399,7 @@ with tab1:
                     annotations=[dict(text=f'{total_records}<br>Total', x=0.5, y=0.5, font_size=16, showarrow=False)]
                 )
 
-                st.plotly_chart(fig_status, use_container_width=True)
+                st.plotly_chart(fig_status, width=True)
 
             with col2:
                 # Amount by status with enhanced insights
@@ -4440,7 +4437,7 @@ with tab1:
                     annotations=[dict(text=f'${total_amount:,.0f}<br>Total', x=0.5, y=0.5, font_size=16, showarrow=False)]
                 )
 
-                st.plotly_chart(fig_amounts, use_container_width=True)
+                st.plotly_chart(fig_amounts, width=True)
             
             # Failure reasons analysis
             if failed_transactions > 0:
@@ -4488,7 +4485,7 @@ with tab1:
                             yaxis={'gridcolor': 'rgba(156, 102, 234, 0.2)', 'categoryorder': 'total ascending'},
                             height=400
                         )
-                        st.plotly_chart(fig_reasons, use_container_width=True)
+                        st.plotly_chart(fig_reasons, width=True)
 
                 with col2:
                     # Simple horizontal bar chart for employee violations
@@ -4522,7 +4519,7 @@ with tab1:
                         yaxis={'categoryorder': 'total ascending'}
                     )
 
-                    st.plotly_chart(fig_violations, use_container_width=True)
+                    st.plotly_chart(fig_violations, width=True)
                 
                 # Employee violation summary
                 st.subheader("👥 Employee Violation Summary")
@@ -4531,7 +4528,7 @@ with tab1:
                 }).round(2)
                 employee_violations.columns = ['Violation Count', 'Total Amount']
                 employee_violations = employee_violations.sort_values('Violation Count', ascending=False)
-                st.dataframe(employee_violations, use_container_width=True)
+                st.dataframe(employee_violations, width=True)
             # Employee Out-of-Pocket Cost Analysis
             if 'Employee_Out_of_Pocket' in st.session_state.df.columns:
                 total_out_of_pocket = st.session_state.df['Employee_Out_of_Pocket'].sum()
@@ -4579,7 +4576,7 @@ with tab1:
                             yaxis={'gridcolor': 'rgba(156, 102, 234, 0.2)', 'title': 'Amount ($)'},
                             height=400
                         )
-                        st.plotly_chart(fig_employee_3d, use_container_width=True)
+                        st.plotly_chart(fig_employee_3d, width=True)
 
                     with col2:
                         # Simple bar chart for cost distribution by category
@@ -4613,7 +4610,7 @@ with tab1:
                             xaxis={'tickformat': '$,.0f'}
                         )
 
-                        st.plotly_chart(fig_costs, use_container_width=True)
+                        st.plotly_chart(fig_costs, width=True)
 
                     # Enhanced detailed breakdown with sparklines
                     st.markdown("### 📋 Executive Cost Summary")
@@ -4638,7 +4635,7 @@ with tab1:
 
                     st.dataframe(
                         employee_costs_display, 
-                        use_container_width=True,
+                        width=True,
                         height=300
                     )
     else:
@@ -4685,7 +4682,7 @@ with tab3:
         
         st.dataframe(
             filtered_df[available_columns],
-            use_container_width=True,
+            width=True,
             column_config={
                 "Amount": st.column_config.NumberColumn(
                     "Amount",
@@ -5137,7 +5134,7 @@ with tab5:
                             })
                         
                         summary_df = pd.DataFrame(summary_data)
-                        st.dataframe(summary_df, use_container_width=True, hide_index=True)
+                        st.dataframe(summary_df, width=True, hide_index=True)
     
     st.markdown("---")
     
@@ -5163,7 +5160,7 @@ with tab5:
                 with col2:
                     end_date = st.date_input("📅 End Date", value=max_date, min_value=min_date, max_value=max_date)
                 with col3:
-                    analyze_button = st.button("🔍 Analyze", type="primary", use_container_width=True)
+                    analyze_button = st.button("🔍 Analyze", type="primary", width=True)
                 
                 if analyze_button and start_date <= end_date:
                     with st.spinner("Analyzing budget..."):
@@ -5260,7 +5257,7 @@ with tab5:
                 results_df = results_df.sort_values('_sort_utilization', ascending=False).drop('_sort_utilization', axis=1)
                 
                 # Display with conditional formatting
-                st.dataframe(results_df, use_container_width=True, hide_index=True)
+                st.dataframe(results_df, width=True, hide_index=True)
                 
                 # Team Detail View
                 st.markdown("---")
@@ -5313,7 +5310,7 @@ with tab5:
                         member_data.sort(key=lambda x: float(x['Amount'].replace('$', '').replace(',', '')), reverse=True)
                         
                         member_df = pd.DataFrame(member_data)
-                        st.dataframe(member_df, use_container_width=True, hide_index=True)
+                        st.dataframe(member_df, width=True, hide_index=True)
                 
                 st.markdown("---")
                 
@@ -5353,7 +5350,7 @@ with tab5:
                                                 help="Send test email to Lulu only")
 
                         with col2:
-                            if st.button("📧 Send Alerts", type="primary", use_container_width=True):
+                            if st.button("📧 Send Alerts", type="primary", width=True):
                                 smtp_config = {
                                     'server': smtp_server,
                                     'port': st.session_state.get('smtp_port', 587),
@@ -5860,7 +5857,7 @@ with tab6:
                             {'Source Category': k, 'Target Category': v} 
                             for k, v in st.session_state.category_mapping.items()
                         ])
-                        st.dataframe(mapping_df, use_container_width=True, height=200)
+                        st.dataframe(mapping_df, width=True, height=200)
                         
                         # Save/Load mapping presets
                         col1, col2, col3 = st.columns(3)
@@ -6446,7 +6443,7 @@ with tab7:
             
             # Display data preview in expander
             with st.expander("📊 Data Preview", expanded=False):
-                st.dataframe(df.head(10), use_container_width=True)
+                st.dataframe(df.head(10), width=True)
                 
                 # Show column mapping suggestions
                 st.markdown("**Column Mapping:**")
@@ -6467,7 +6464,7 @@ with tab7:
                                           index=next((i for i, col in enumerate(cols) if 'date' in col.lower()), 0))
             
             # Analysis button
-            if st.button("🔍 Analyze Fixed Assets", type="primary", use_container_width=True):
+            if st.button("🔍 Analyze Fixed Assets", type="primary", width=True):
                 if st.session_state.fixed_asset_detector is None:
                     st.session_state.fixed_asset_detector = FixedAssetDetector()
                 
@@ -6612,7 +6609,7 @@ with tab7:
                             font=dict(size=12, color='white')
                         )
                     )
-                    st.plotly_chart(fig_confidence, use_container_width=True)
+                    st.plotly_chart(fig_confidence, width=True)
 
                 with col2:
                     st.markdown("**📊 Score Distribution**")
@@ -6661,7 +6658,7 @@ with tab7:
                             font=dict(size=12, color='white')
                         )
                     )
-                    st.plotly_chart(fig_scores, use_container_width=True)
+                    st.plotly_chart(fig_scores, width=True)
 
                 with col3:
                     st.markdown("**💰 Value Distribution**")
@@ -6727,7 +6724,7 @@ with tab7:
                                 font=dict(size=12, color='white')
                             )
                         )
-                        st.plotly_chart(fig_values, use_container_width=True)
+                        st.plotly_chart(fig_values, width=True)
 
                 # Score split analysis with enhanced styling
                 st.markdown("---")
@@ -6771,7 +6768,7 @@ with tab7:
                             font=dict(size=11, color='white')
                         )
                     )
-                    st.plotly_chart(fig_score_split, use_container_width=True)
+                    st.plotly_chart(fig_score_split, width=True)
 
                 with col2:
                     st.markdown("**🏷️ Category Distribution (Fixed Assets Only)**")
@@ -6825,7 +6822,7 @@ with tab7:
                                 font=dict(size=12, color='white')
                             )
                         )
-                        st.plotly_chart(fig_categories, use_container_width=True)
+                        st.plotly_chart(fig_categories, width=True)
         
         with tab_results:
             st.markdown("**📋 All Transaction Results**")
@@ -6916,7 +6913,7 @@ with tab7:
                 
                 st.dataframe(
                     styled_df.style.apply(color_row, axis=1),
-                    use_container_width=True,
+                    width=True,
                     hide_index=True,
                     height=400
                 )
@@ -6932,32 +6929,32 @@ with tab7:
             
             with col1:
                 # Export filtered results
-                if st.button("📊 Export Filtered Results", use_container_width=True):
+                if st.button("📊 Export Filtered Results", width=True):
                     csv_data = filtered_df.to_csv(index=False)
                     st.download_button(
                         label="📥 Download CSV",
                         data=csv_data,
                         file_name=f"fixed_assets_filtered_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        use_container_width=True
+                        width=True
                     )
             
             with col2:
                 # Export only fixed assets
                 fixed_assets_only = filtered_df[filtered_df['is_fixed_asset'] == True]
-                if st.button("🏢 Export Fixed Assets Only", use_container_width=True):
+                if st.button("🏢 Export Fixed Assets Only", width=True):
                     csv_data = fixed_assets_only.to_csv(index=False)
                     st.download_button(
                         label="📥 Download Fixed Assets CSV",
                         data=csv_data,
                         file_name=f"fixed_assets_only_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        use_container_width=True
+                        width=True
                     )
             
             with col3:
                 # Export summary report
-                if st.button("📋 Export Summary Report", use_container_width=True):
+                if st.button("📋 Export Summary Report", width=True):
                     # Create summary report
                     summary_data = {
                         'Total Transactions': len(filtered_df),
@@ -6978,7 +6975,7 @@ with tab7:
                         data=csv_data,
                         file_name=f"fixed_assets_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
-                        use_container_width=True
+                        width=True
                     )
             
             # Export options explanation
@@ -7080,7 +7077,7 @@ with tab7:
 
                     # Show the dataframe with available columns
                     if display_columns:
-                        st.dataframe(fixed_assets_only[display_columns], use_container_width=True)
+                        st.dataframe(fixed_assets_only[display_columns], width=True)
                     else:
                         st.warning("⚠️ No suitable columns found to display")
                     
@@ -7310,7 +7307,7 @@ with tab7:
                                                 st.markdown("---")
 
                                 # Send emails button
-                                if st.button("📧 Schedule Fixed Asset Alerts", type="primary", use_container_width=True):
+                                if st.button("📧 Schedule Fixed Asset Alerts", type="primary", width=True):
                                     with st.spinner("📧 Scheduling fixed asset alert emails..."):
                                         result = st.session_state.fixed_asset_detector.send_fixed_asset_emails_with_ui(
                                             employee_transactions_dict=employee_transactions_dict,
