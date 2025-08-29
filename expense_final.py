@@ -1036,6 +1036,29 @@ def map_employee_to_department(employee_name):
     # If no match found
     return None
 
+def get_all_current_employees():
+    """
+    Get a list of all current employees from the team leaders structure
+    """
+    all_employees = []
+    team_leaders = st.session_state.get('custom_team_leaders', TEAM_LEADERS)
+    
+    for department, info in team_leaders.items():
+        # Add leader
+        all_employees.append(info["leader"])
+        # Add members
+        all_employees.extend(info["members"])
+    
+    return [emp.strip().lower() for emp in all_employees]
+
+def is_valid_email(email):
+    """
+    Basic email validation
+    """
+    import re
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
 def display_department_mapping_editor():
     """
     Display and allow editing of department mappings
@@ -1047,8 +1070,12 @@ def display_department_mapping_editor():
     if 'custom_team_leaders' not in st.session_state:
         st.session_state.custom_team_leaders = TEAM_LEADERS.copy()
     
+    # Initialize session state for email mappings if not exists
+    if 'custom_email_mappings' not in st.session_state:
+        st.session_state.custom_email_mappings = EMPLOYEE_EMAIL_MAPPING.copy()
+    
     # Tab layout for better organization
-    tab1, tab2 = st.tabs(["📋 View Current Mappings", "✏️ Edit Mappings"])
+    tab1, tab2, tab3 = st.tabs(["📋 View Current Mappings", "✏️ Edit Mappings", "📧 Email Management"])
     
     with tab1:
         st.markdown("**Current Department Structure:**")
@@ -1060,13 +1087,17 @@ def display_department_mapping_editor():
                 
                 with col1:
                     st.markdown("**Team Leader:**")
+                    leader_email = st.session_state.custom_email_mappings.get(info['leader'], 'No email')
                     st.write(f"👑 {info['leader']}")
+                    st.caption(f"📧 {leader_email}")
                 
                 with col2:
                     st.markdown("**Team Members:**")
                     if info['members']:
                         for member in info['members']:
+                            member_email = st.session_state.custom_email_mappings.get(member, 'No email')
                             st.write(f"• {member}")
+                            st.caption(f"📧 {member_email}")
                     else:
                         st.write("_No team members_")
     
@@ -1109,7 +1140,9 @@ def display_department_mapping_editor():
                 for i, member in enumerate(dept_info['members']):
                     col1, col2 = st.columns([3, 1])
                     with col1:
+                        member_email = st.session_state.custom_email_mappings.get(member, 'No email')
                         st.write(f"• {member}")
+                        st.caption(f"📧 {member_email}")
                     with col2:
                         if st.button("🗑️", key=f"remove_{selected_dept}_{i}", help=f"Remove {member}"):
                             st.session_state.custom_team_leaders[selected_dept]['members'].remove(member)
@@ -1120,6 +1153,10 @@ def display_department_mapping_editor():
             
             # Add new member
             st.markdown("**Add New Member:**")
+            
+            # Get current employees list
+            current_employees = get_all_current_employees()
+            
             col1, col2 = st.columns([2, 1])
             
             with col1:
@@ -1129,9 +1166,33 @@ def display_department_mapping_editor():
                     key=f"new_member_{selected_dept}"
                 )
             
+            # Check if this is a new employee (not in current list)
+            is_new_employee = new_member.strip() and new_member.strip().lower() not in current_employees
+            
+            # Show email input field if it's a new employee
+            new_member_email = None
+            if is_new_employee:
+                st.info("ℹ️ This appears to be a new employee. Please provide their email address.")
+                new_member_email = st.text_input(
+                    "Email Address:",
+                    placeholder="Enter email address (e.g., firstname@k-id.com)",
+                    key=f"new_member_email_{selected_dept}"
+                )
+            
             with col2:
+                st.write("")  # Spacing
+                st.write("")  # More spacing to align with input fields
                 if st.button("➕ Add Member", key=f"add_member_{selected_dept}"):
                     if new_member and new_member.strip():
+                        # For new employees, validate email
+                        if is_new_employee:
+                            if not new_member_email or not new_member_email.strip():
+                                st.error("❌ Please enter an email address for the new employee")
+                                st.stop()
+                            elif not is_valid_email(new_member_email.strip()):
+                                st.error("❌ Please enter a valid email address")
+                                st.stop()
+                        
                         # Check if member already exists in any department
                         existing_dept = None
                         for dept, info in st.session_state.custom_team_leaders.items():
@@ -1142,8 +1203,16 @@ def display_department_mapping_editor():
                         if existing_dept and existing_dept != selected_dept:
                             st.warning(f"⚠️ {new_member} is already in {existing_dept}. Move them first!")
                         elif new_member.strip() not in dept_info['members']:
+                            # Add to department
                             st.session_state.custom_team_leaders[selected_dept]['members'].append(new_member.strip())
-                            st.success(f"✅ Added {new_member} to {selected_dept}")
+                            
+                            # Add email mapping if it's a new employee
+                            if is_new_employee and new_member_email:
+                                st.session_state.custom_email_mappings[new_member.strip()] = new_member_email.strip()
+                                st.success(f"✅ Added {new_member} to {selected_dept} with email {new_member_email}")
+                            else:
+                                st.success(f"✅ Added {new_member} to {selected_dept}")
+                            
                             st.rerun()
                         else:
                             st.warning(f"⚠️ {new_member} is already in this department")
@@ -1209,20 +1278,121 @@ def display_department_mapping_editor():
         with col1:
             if st.button("🔄 Reset to Default Mappings", type="secondary"):
                 st.session_state.custom_team_leaders = TEAM_LEADERS.copy()
-                st.success("✅ Department mappings reset to defaults")
+                st.session_state.custom_email_mappings = EMPLOYEE_EMAIL_MAPPING.copy()
+                st.success("✅ Department mappings and emails reset to defaults")
                 st.rerun()
         
         with col2:
             # Download current mappings as JSON
             if st.button("💾 Download Current Mappings"):
                 import json
-                mapping_json = json.dumps(st.session_state.custom_team_leaders, indent=2)
+                export_data = {
+                    "team_leaders": st.session_state.custom_team_leaders,
+                    "email_mappings": st.session_state.custom_email_mappings
+                }
+                mapping_json = json.dumps(export_data, indent=2)
                 st.download_button(
                     label="📥 Download JSON",
                     data=mapping_json,
-                    file_name="department_mappings.json",
+                    file_name="department_mappings_with_emails.json",
                     mime="application/json"
                 )
+    
+    with tab3:
+        st.markdown("**Email Address Management:**")
+        
+        # Display all employees and their emails
+        st.markdown("**Current Email Mappings:**")
+        
+        # Create a searchable list
+        search_term = st.text_input("🔍 Search employees:", placeholder="Type to search...")
+        
+        # Get all employees with their emails
+        all_emp_emails = []
+        for dept, info in st.session_state.custom_team_leaders.items():
+            # Leader
+            leader_email = st.session_state.custom_email_mappings.get(info['leader'], 'No email assigned')
+            all_emp_emails.append((info['leader'], leader_email, dept, True))  # True for leader
+            
+            # Members
+            for member in info['members']:
+                member_email = st.session_state.custom_email_mappings.get(member, 'No email assigned')
+                all_emp_emails.append((member, member_email, dept, False))  # False for member
+        
+        # Filter based on search
+        if search_term:
+            all_emp_emails = [emp for emp in all_emp_emails if search_term.lower() in emp[0].lower() or search_term.lower() in emp[1].lower()]
+        
+        # Display in a table-like format
+        for name, email, dept, is_leader in all_emp_emails:
+            with st.container():
+                col1, col2, col3 = st.columns([2, 2, 1])
+                
+                with col1:
+                    role_indicator = "👑" if is_leader else "•"
+                    st.write(f"{role_indicator} **{name}**")
+                    st.caption(f"{dept}")
+                
+                with col2:
+                    # Editable email field
+                    current_email = st.session_state.custom_email_mappings.get(name, '')
+                    new_email = st.text_input(
+                        f"Email for {name}:",
+                        value=current_email,
+                        key=f"email_edit_{name}",
+                        label_visibility="collapsed"
+                    )
+                
+                with col3:
+                    if st.button("💾", key=f"save_email_{name}", help=f"Save email for {name}"):
+                        if new_email and is_valid_email(new_email.strip()):
+                            st.session_state.custom_email_mappings[name] = new_email.strip()
+                            st.success(f"✅ Updated email for {name}")
+                            st.rerun()
+                        elif new_email:
+                            st.error("❌ Invalid email format")
+                        else:
+                            # Remove email if empty
+                            if name in st.session_state.custom_email_mappings:
+                                del st.session_state.custom_email_mappings[name]
+                                st.success(f"✅ Removed email for {name}")
+                                st.rerun()
+                
+                st.divider()
+        
+        # Bulk email update option
+        st.markdown("**Bulk Email Update:**")
+        st.caption("Upload a CSV with columns: Name, Email")
+        
+        uploaded_file = st.file_uploader("Choose CSV file", type="csv", key="email_bulk_upload")
+        if uploaded_file is not None:
+            try:
+                import pandas as pd
+                df = pd.read_csv(uploaded_file)
+                
+                if 'Name' in df.columns and 'Email' in df.columns:
+                    col1, col2 = st.columns([1, 1])
+                    
+                    with col1:
+                        st.dataframe(df.head())
+                    
+                    with col2:
+                        if st.button("📧 Update Emails from CSV"):
+                            updated_count = 0
+                            for _, row in df.iterrows():
+                                name = str(row['Name']).strip()
+                                email = str(row['Email']).strip()
+                                
+                                if name and email and is_valid_email(email):
+                                    st.session_state.custom_email_mappings[name] = email
+                                    updated_count += 1
+                            
+                            st.success(f"✅ Updated {updated_count} email addresses")
+                            st.rerun()
+                else:
+                    st.error("❌ CSV must contain 'Name' and 'Email' columns")
+            except Exception as e:
+                st.error(f"❌ Error reading CSV: {str(e)}")
 
 def load_budget_file(uploaded_file):
     """Load budget data from uploaded file (CSV or Excel)"""
