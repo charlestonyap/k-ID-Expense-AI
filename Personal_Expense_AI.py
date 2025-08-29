@@ -531,8 +531,8 @@ class PersonalExpenseDetector:
                 'meeting', 'conference', 'training', 'seminar', 'workshop'
             ],
             'supplies_equipment': [
-                'supplies', 'equipment', 'software', 'hardware', 'tools', 'materials',
-                'license', 'subscription', 'service', 'maintenance', 'support'
+                'supplies', 'equipment', 'hardware', 'tools', 'materials',
+                'license', 'service', 'maintenance', 'support'
             ],
             'client_related': [
                 'client', 'customer', 'vendor', 'supplier', 'partner', 'contractor',
@@ -567,8 +567,7 @@ class PersonalExpenseDetector:
                 'meeting', 'conference', 'training', 'professional', 'team'
             ],
             'medium_confidence': [
-                'supplies', 'equipment', 'software', 'license', 'subscription',
-                'consulting', 'services', 'maintenance', 'support'
+                'supplies', 'equipment', 'services', 'maintenance', 'support'
             ]
         }
         
@@ -593,7 +592,7 @@ class PersonalExpenseDetector:
         
         self.business_semantic_groups = {
             'office_corporate': ['office', 'corporate', 'business', 'company', 'professional'],
-            'supplies_equipment': ['supplies', 'equipment', 'software', 'hardware', 'tools'],
+            'supplies_equipment': ['supplies', 'equipment', 'hardware', 'tools'],
             'client_related': ['client', 'meeting', 'conference', 'consultation', 'service']
         }
         
@@ -2881,27 +2880,7 @@ class FixedAssetDetector:
                 'weight': 0.9,
                 'min_amount': 200,  # Minimum amount for IT equipment
                 'depreciation_years': 3
-            },
-            
-            'software_licenses': {
-                'exact_matches': [
-                    # Software Companies
-                    'microsoft', 'adobe', 'oracle', 'sap', 'salesforce', 'autodesk',
-                    'quickbooks', 'sage', 'intuit', 'vmware', 'citrix',
-                    
-                    # Software Types
-                    'software license', 'enterprise license', 'perpetual license',
-                    'office 365', 'adobe creative', 'autocad', 'solidworks',
-                    'windows server', 'sql server', 'exchange server'
-                ],
-                'fuzzy_patterns': [
-                    'software licensing', 'enterprise software', 'business software',
-                    'professional software', 'specialized software', 'system software'
-                ],
-                'weight': 0.75,
-                'min_amount': 500,
-                'depreciation_years': 3
-            },
+            }
             
             'furniture_office': {
                 'exact_matches': [
@@ -3105,8 +3084,7 @@ class FixedAssetDetector:
 
         # Define high-priority software companies that should always go to software_licenses
         software_companies = {
-            'microsoft', 'adobe', 'oracle', 'sap', 'salesforce', 'autodesk',
-            'quickbooks', 'sage', 'intuit', 'vmware', 'citrix'
+            
         }
 
         for category, patterns in self.fixed_asset_patterns.items():
@@ -3476,8 +3454,7 @@ class FixedAssetDetector:
                 'furniture_office': '🪑', 
                 'machinery_equipment': '⚙️',
                 'vehicles_transport': '🚛',
-                'building_improvements': '🏗️',
-                'software_licenses': '💿'
+                'building_improvements': '🏗️'
             }
 
             category_display = f"{category_icons.get(category, '📦')} {category.replace('_', ' ').title()}" if category else '📦 Unclassified'
