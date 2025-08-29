@@ -5498,41 +5498,31 @@ with tab6:
 
         # Initialize or load detector
         if 'expense_detector' not in st.session_state:
-            # Debug: Show current working directory and files
-            st.write("**Debug Info:**")
-            st.write(f"Current directory: {os.getcwd()}")
-            st.write("Files in current directory:")
-            st.write(os.listdir("."))
-            
-            if os.path.exists("trained_models"):
-                st.write("Files in trained_models:")
-                st.write(os.listdir("trained_models"))
-            
-            model_path = "trained_models"
-            
-            # Check if required files exist
-            required_files = ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]
-            model_files_exist = all(
-                os.path.exists(os.path.join(model_path, file)) 
-                for file in required_files
-            )
-            
-            if model_files_exist:
-                try:
-                    st.session_state.expense_detector = PersonalExpenseDetector(
-                        model_path=model_path, 
-                        auto_train=False
-                    )
-                    st.success("✅ Pre-trained ML model loaded successfully!")
-                except Exception as e:
-                    st.warning(f"⚠️ Could not load pre-trained model: {e}")
-                    st.info("🔄 Using rule-based detection only.")
-                    st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
-            else:
-                st.warning("⚠️ Required model files not found. Using rule-based detection only.")
+            try:
+                # Direct initialization without model loading
+                detector = PersonalExpenseDetector(auto_train=False)
+                
+                # Manual loading of just the essential files
+                model_dir = "trained_models"
+                if all(os.path.exists(f"{model_dir}/{f}") for f in ["best_model.pkl", "scaler.pkl", "category_encoder.pkl"]):
+                    with open(f"{model_dir}/best_model.pkl", 'rb') as f:
+                        detector.best_model = pickle.load(f)
+                    with open(f"{model_dir}/scaler.pkl", 'rb') as f:
+                        detector.scaler = pickle.load(f)
+                    with open(f"{model_dir}/category_encoder.pkl", 'rb') as f:
+                        detector.category_encoder = pickle.load(f)
+                    
+                    detector.is_ml_trained = True
+                    detector.category_encoder_fitted = True
+                    st.success("✅ Essential ML components loaded!")
+                else:
+                    st.warning("⚠️ Using rule-based detection only.")
+                    
+                st.session_state.expense_detector = detector
+                
+            except Exception as e:
+                st.error(f"Error: {e}")
                 st.session_state.expense_detector = PersonalExpenseDetector(auto_train=False)
-        
-        detector = st.session_state.expense_detector
 
         # Model Status Display
         st.subheader("ℹ️ Detection System Status")
