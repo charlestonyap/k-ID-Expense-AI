@@ -5627,7 +5627,7 @@ with tab6:
         
         # Get detector from session state (this runs every time, not just on first load)
         detector = st.session_state.expense_detector
-
+        """
         # Model Status Display
         st.subheader("ℹ️ Detection System Status")
         col1, col2, col3 = st.columns(3)
@@ -5657,7 +5657,7 @@ with tab6:
             else:
                 st.warning("⚠️ NLP Embeddings: Not Available")
                 st.caption("💡 NLP = Natural Language Processing for text analysis")
-
+        """
         # Training setup section for non-ML users
         if not detector.is_ml_trained:
             with st.expander("🤖 ML Detection"):
